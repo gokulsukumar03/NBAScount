@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:layout_gravity="center">
+
+<TextView
+    android:id="@+id/tab_text_tv"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:layout_alignParentTop="true"
+    android:textSize="@dimen/_13ssp"
+    android:text="Players"
+    android:gravity="center"
+    android:textColor="@color/app_blue" />
+
+<TextView
+    android:id="@+id/total_count_player_badge_tv"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/badge_border"
+    android:text="110"
+    android:gravity="center"
+    android:textSize="@dimen/_6ssp"
+    android:layout_margin="@dimen/_4sdp"
+    android:paddingLeft="@dimen/_6sdp"
+    android:paddingRight="@dimen/_6sdp"
+    android:paddingTop="@dimen/_2sdp"
+    android:paddingBottom="@dimen/_2sdp"
+    android:layout_toRightOf="@id/tab_text_tv"
+
+    android:textColor="@color/white" />
+</RelativeLayout>
