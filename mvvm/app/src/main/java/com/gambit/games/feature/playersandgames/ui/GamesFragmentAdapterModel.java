@@ -1,6 +1,6 @@
 package com.gambit.games.feature.playersandgames.ui;
 
-public class GamesFragmentAdapterViewModel {
+public class GamesFragmentAdapterModel {
 
     private String homeAbbreviation;
     private String homeFullName;

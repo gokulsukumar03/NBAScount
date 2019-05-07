@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.TooltipCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +11,7 @@ import android.widget.Toast;
 
 import com.gambit.games.R;
 import com.gambit.games.databinding.AdapterGamesFragmentBinding;
-import com.gambit.games.databinding.AdapterPlayersFragmentBinding;
 import com.gambit.games.feature.playersandgames.model.games.GetAllGamesInfo;
-import com.gambit.games.feature.playersandgames.model.player.GetAllPlayerInfo;
 import com.gambit.games.feature.playersandgames.usercase.GamesFragmentAdapterListener;
 
 import java.util.List;
@@ -25,7 +22,7 @@ public class GamesFragmentAdapter extends RecyclerView.Adapter<GamesFragmentAdap
     private List<GetAllGamesInfo> getAllGamesInfoList;
     private AdapterGamesFragmentBinding adapterGamesFragmentBinding;
     private LayoutInflater layoutInflater;
-    private GamesFragmentAdapterViewModel gamesFragmentAdapterViewModel;
+    private GamesFragmentAdapterModel gamesFragmentAdapterViewModel;
 
 
     public GamesFragmentAdapter(@NonNull Activity activity, @NonNull List<GetAllGamesInfo> getAllPlayerInfo){
@@ -46,7 +43,7 @@ public class GamesFragmentAdapter extends RecyclerView.Adapter<GamesFragmentAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        gamesFragmentAdapterViewModel = new GamesFragmentAdapterViewModel();
+        gamesFragmentAdapterViewModel = new GamesFragmentAdapterModel();
         gamesFragmentAdapterViewModel.setHomeAbbreviation(getAllGamesInfoList.get(position).getHomeTeam().getAbbreviation());
         gamesFragmentAdapterViewModel.setHomeFullName(getAllGamesInfoList.get(position).getHomeTeam().getFullName());
         gamesFragmentAdapterViewModel.setVisitorAbbreviation(getAllGamesInfoList.get(position).getVisitorTeam().getAbbreviation());

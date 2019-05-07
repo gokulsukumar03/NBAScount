@@ -3,16 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="gamesFragmentModel"
+            type="com.gambit.games.feature.playersandgames.usercase.GamesFragmentModel" />
+
+    </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">
 
+        <TextView
+            android:id="@+id/timer_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_16sdp"
+            android:textSize="@dimen/_26sdp"
+            android:text="@{gamesFragmentModel.timer}"
+            android:gravity="center"/>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/games_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/timer_tv"
             android:paddingBottom="@dimen/_34sdp"/>
 
 

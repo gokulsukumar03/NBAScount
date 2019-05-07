@@ -8,7 +8,7 @@
         
         <variable
             name="adapterGameViewModel"
-            type="com.gambit.games.feature.playersandgames.ui.GamesFragmentAdapterViewModel" />
+            type="com.gambit.games.feature.playersandgames.ui.GamesFragmentAdapterModel" />
 
 
     </data>

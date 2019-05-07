@@ -22,13 +22,10 @@ import com.gambit.games.feature.playersandgames.usercase.TabUpdateListener;
 import java.util.Objects;
 
 public class PlayersAndGamesActivity extends AppCompatActivity implements TabUpdateListener {
-
-
     private ActivityPlayersGamesBinding activityPlayersGamesBinding;
     private PlayersAndGamesPagerAdapter playersAndGamesPagerAdapter;
     private View playerView, gamesView;
     private TextView totalCountPlayersBadgeView, totalCountGamesBadgeView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,19 +53,16 @@ public class PlayersAndGamesActivity extends AppCompatActivity implements TabUpd
     }
 
     private void renderView() {
-
-
         activityPlayersGamesBinding.styleTab.addTab(activityPlayersGamesBinding.styleTab.newTab().setText("Players"));
         activityPlayersGamesBinding.styleTab.addTab(activityPlayersGamesBinding.styleTab.newTab().setText("Games"));
-
         playersAndGamesPagerAdapter = new PlayersAndGamesPagerAdapter(getSupportFragmentManager());
         activityPlayersGamesBinding.viewpager.setAdapter(playersAndGamesPagerAdapter);
         activityPlayersGamesBinding.viewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(activityPlayersGamesBinding.styleTab));
         playerView = LayoutInflater.from(this).inflate(R.layout.tab_layout_palyer_badge, null);
         totalCountPlayersBadgeView = playerView.findViewById(R.id.total_count_player_badge_tv);
-
         gamesView = LayoutInflater.from(this).inflate(R.layout.tab_layout_games_badge,null);
         totalCountGamesBadgeView = gamesView.findViewById(R.id.total_count_games_badge_tv);
+
     }
 
     @Override

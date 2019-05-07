@@ -1,5 +1,6 @@
 package com.gambit.games.feature.playersandgames.ui;
 
+import android.arch.lifecycle.Lifecycle;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.gambit.games.R;
 import com.gambit.games.application.config.RemoteServiceConfig;
+import com.gambit.games.base.PlayersAndGamesComponent;
 import com.gambit.games.databinding.FragmentPlayersBinding;
 import com.gambit.games.feature.playersandgames.constant.PlayersAndGamesConstant;
 import com.gambit.games.feature.playersandgames.model.player.GetAllPlayerInfo;
@@ -33,15 +35,11 @@ public class PlayersFragment extends Fragment {
 
     private PlayersFragmentService playersFragmentService = null;
     private PlayersFragmentFactory playersFragmentFactory = null;
-
     private PlayersFragmentAdapter playersFragmentAdapter = null;
     private LinearLayoutManager linearLayoutManager = null;
-
-
     private FragmentPlayersBinding fragmentPlayersBinding = null;
     private View view = null;
     private File cacheFile = null;
-
     private int totalPages=0;
     private int currentPage = 0;
     private int nextPage = 0;
@@ -63,10 +61,9 @@ public class PlayersFragment extends Fragment {
         // Inflate the layout for this fragment
         fragmentPlayersBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_players, container, false);
         view = fragmentPlayersBinding.getRoot();
-
+        getLifecycle().addObserver(new PlayersAndGamesComponent());
         searchAllPlayers();
         getAllPlayers();
-
         return view;
     }
 
@@ -103,6 +100,7 @@ public class PlayersFragment extends Fragment {
                                     public void onResponse(GetAllPlayersResponseModel getAllPlayersResponseModel) {
                                         if (getAllPlayersResponseModel.getData().size() > 0) {
 
+                                            if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.RESUMED)) {
                                                 totalPages = getAllPlayersResponseModel.getMeta().getTotalPages();
                                                 currentPage = getAllPlayersResponseModel.getMeta().getCurrentPage();
                                                 nextPage = getAllPlayersResponseModel.getMeta().getNextPage();
@@ -112,9 +110,10 @@ public class PlayersFragment extends Fragment {
                                                 ((PlayersAndGamesActivity) Objects.requireNonNull(getActivity())).updateTabText(0, String.valueOf(getAllPlayerInfoList.size()));
                                                 playersFragmentAdapter.notifyDataSetChanged();
                                                 playersFragmentAdapter.setLoaded();
-                                                if(getActivity()!=null)
+                                                if (getActivity() != null)
                                                     Toast.makeText(getActivity(), "More data fetched...", Toast.LENGTH_SHORT).show();
 
+                                            }
                                         }
                                     }
 
@@ -136,8 +135,8 @@ public class PlayersFragment extends Fragment {
 
     }
     private void getAllPlayers() {
-        if(getActivity()!=null)
-            Toast.makeText(getActivity(), "Fetching games...", Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(getActivity(), "Fetching players...", Toast.LENGTH_SHORT).show();
         cacheFile = new File(getActivity().getCacheDir(), "responses");
         playersFragmentFactory = new RemoteServiceConfig<PlayersFragmentFactory>().createApiService(PlayersFragmentFactory.class, cacheFile);
         playersFragmentService = new PlayersFragmentServiceImpl();
@@ -149,6 +148,7 @@ public class PlayersFragment extends Fragment {
                     @Override
                     public void onResponse(GetAllPlayersResponseModel getAllPlayersResponseModel) {
 
+                    if(getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.RESUMED)) {
                         totalPages = getAllPlayersResponseModel.getMeta().getTotalPages();
                         currentPage = getAllPlayersResponseModel.getMeta().getCurrentPage();
                         nextPage = getAllPlayersResponseModel.getMeta().getNextPage();
@@ -162,6 +162,7 @@ public class PlayersFragment extends Fragment {
                             ((PlayersAndGamesActivity) Objects.requireNonNull(getActivity())).updateTabText(0, String.valueOf(getAllPlayersResponseModel.getData().size()));
                             fragmentPlayersBinding.playersRecyclerView.setAdapter(playersFragmentAdapter);
                         }
+                    }
                     }
 
                     @Override
@@ -193,6 +194,7 @@ public class PlayersFragment extends Fragment {
                         public void onResponse(GetAllPlayersResponseModel getAllPlayersResponseModel) {
                             if (getAllPlayersResponseModel.getData().size() > 0) {
 
+                                if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.RESUMED)) {
                                     ((PlayersAndGamesActivity) Objects.requireNonNull(getActivity())).updateTabText(0, String.valueOf(getAllPlayersResponseModel.getData().size()));
                                     playersFragmentAdapter.notifyDataSetChanged();
                                     playersFragmentAdapter.loadPlayerData(getAllPlayersResponseModel.getData());
@@ -200,6 +202,7 @@ public class PlayersFragment extends Fragment {
                                     fragmentPlayersBinding.playersRecyclerView.setAdapter(playersFragmentAdapter);
                                     Toast.makeText(getActivity(), "Search completed...", Toast.LENGTH_SHORT).show();
                                 }
+                            }
                         }
 
                         @Override
